@@ -1,72 +1,386 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modern Shop Home</title>
+    <title>Mocha Boutique | Fashion Store</title>
+
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: sans-serif; }
-        header { background: #333; color: white; padding: 20px; display: flex; justify-content: space-between; align-items: center; }
-        header nav a { color: white; margin-left: 20px; text-decoration: none; }
-        .hero { background: #f4f4f4; padding: 60px 20px; text-align: center; }
-        .hero h1 { margin-bottom: 10px; }
-        .products { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; padding: 40px 20px; }
-        .product-card { border: 1px solid #ddd; padding: 15px; border-radius: 5px; text-align: center; }
-        .product-card img { max-width: 100%; height: 200px; object-fit: cover; background: #eee; margin-bottom: 15px; }
-        .btn { display: inline-block; background: #ff5722; color: white; padding: 10px 15px; text-decoration: none; border-radius: 3px; margin-top: 10px; }
-        footer { background: #222; color: white; text-align: center; padding: 20px; margin-top: 40px; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #faf6f0;
+            color: #30251f;
+        }
+
+        header {
+            background-color: #6f4e37;
+            color: white;
+            padding: 20px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 15px;
+        }
+
+        nav a:hover {
+            color: #e8d5bd;
+        }
+
+        .hero {
+            min-height: 420px;
+            display: flex;
+            align-items: center;
+            padding: 60px 8%;
+            background: linear-gradient(90deg,
+                rgba(48, 37, 31, 0.85),
+                rgba(48, 37, 31, 0.15)),
+                url("https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1600&q=80");
+            background-size: cover;
+            background-position: center;
+            color: white;
+        }
+
+        .hero-content {
+            max-width: 500px;
+        }
+
+        .hero h1 {
+            font-size: clamp(36px, 5vw, 58px);
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 17px;
+            line-height: 1.7;
+            margin-bottom: 25px;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #d8c3a5;
+            color: #30251f;
+            padding: 13px 25px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #c5a984;
+        }
+
+        .section {
+            padding: 60px 8%;
+            text-align: center;
+        }
+
+        .section h2 {
+            font-size: 32px;
+            margin-bottom: 12px;
+        }
+
+        .subtitle {
+            color: #78685b;
+            margin-bottom: 35px;
+        }
+
+        .categories {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+
+        .category {
+            padding: 12px 24px;
+            border: 1px solid #b49b7e;
+            border-radius: 25px;
+            cursor: pointer;
+            background: transparent;
+            color: #6f4e37;
+        }
+
+        .category:hover,
+        .category.active {
+            background-color: #6f4e37;
+            color: white;
+        }
+
+        .products {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 25px;
+        }
+
+        .product {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            text-align: left;
+            box-shadow: 0 4px 15px rgba(48, 37, 31, 0.08);
+            transition: transform 0.3s;
+        }
+
+        .product:hover {
+            transform: translateY(-6px);
+        }
+
+        .product img {
+            width: 100%;
+            height: 240px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .product-info {
+            padding: 18px;
+        }
+
+        .product-info h3 {
+            font-size: 17px;
+            margin-bottom: 10px;
+        }
+
+        .price {
+            color: #6f4e37;
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .product .btn {
+            width: 100%;
+            text-align: center;
+        }
+
+        .about {
+            background-color: #eee3d5;
+            line-height: 1.8;
+        }
+
+        .about p {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .cart-message {
+            margin-top: 20px;
+            color: #6f4e37;
+            font-weight: bold;
+        }
+
+        footer {
+            background-color: #30251f;
+            color: #f8f1e7;
+            text-align: center;
+            padding: 25px;
+            line-height: 1.8;
+        }
+
+        @media (max-width: 900px) {
+            .products {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 550px) {
+            header {
+                justify-content: center;
+                text-align: center;
+            }
+
+            nav a {
+                margin: 0 7px;
+            }
+
+            .products {
+                grid-template-columns: 1fr;
+            }
+
+            .product img {
+                height: 300px;
+            }
+
+            .hero {
+                min-height: 380px;
+            }
+        }
     </style>
 </head>
+
 <body>
 
-    <!-- Navigation Header -->
     <header>
-        <div class="logo"><h2>QuickShop</h2></div>
+        <div class="logo">Mocha Boutique</div>
+
         <nav>
-            <a href="#">Home</a>
-            <a href="#">Products</a>
-            <a href="#">Cart (0)</a>
+            <a href="#home">Home</a>
+            <a href="#shop">Shop</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+            <a href="#shop">🛍️ <span id="cart-count">0</span></a>
         </nav>
     </header>
 
-    <!-- Hero / Banner Section -->
-    <section class="hero">
-        <h1>New Season Arrivals</h1>
-        <p>Discover the latest trends with up to 50% off.</p>
-        <a href="#" class="btn">Shop Now</a>
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Discover Your Style</h1>
+            <p>
+                Find your perfect look with our collection of
+                trendy outfits and timeless accessories.
+                Style that feels like you.
+            </p>
+            <a href="#shop" class="btn">Explore Collection</a>
+        </div>
     </section>
 
-    <!-- Product Grid -->
-    <main class="products">
-        <!-- Product 1 -->
-        <div class="product-card">
-            <img src="https://placeholder.com" alt="Product Image">
-            <h3>Classic Backpack</h3>
-            <p>$49.99</p>
-            <a href="#" class="btn">Add to Cart</a>
+    <section class="section" id="shop">
+        <h2>Our Collection</h2>
+        <p class="subtitle">
+            A little elegance for every day.
+        </p>
+
+        <div class="categories">
+            <button class="category active" data-category="All">All</button>
+            <button class="category" data-category="Clothing">Clothing</button>
+            <button class="category" data-category="Bags">Bags</button>
+            <button class="category" data-category="Accessories">Accessories</button>
         </div>
 
-        <!-- Product 2 -->
-        <div class="product-card">
-            <img src="https://placeholder.com" alt="Product Image">
-            <h3>Wireless Headphones</h3>
-            <p>$129.99</p>
-            <a href="#" class="btn">Add to Cart</a>
+        <div class="products">
+
+            <article class="product" data-category="Clothing">
+                <img src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=600&q=80"
+                     alt="Elegant women's fashion outfit">
+                <div class="product-info">
+                    <h3>Classic Everyday Outfit</h3>
+                    <p class="price">₹899</p>
+                    <button class="btn add-cart">Add to Cart</button>
+                </div>
+            </article>
+
+            <article class="product" data-category="Bags">
+                <img src="https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=600&q=80"
+                     alt="Stylish handbag">
+                <div class="product-info">
+                    <h3>Elegant Handbag</h3>
+                    <p class="price">₹1,299</p>
+                    <button class="btn add-cart">Add to Cart</button>
+                </div>
+            </article>
+
+            <article class="product" data-category="Accessories">
+                <img src="https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=600&q=80"
+                     alt="Minimal jewellery accessories">
+                <div class="product-info">
+                    <h3>Golden Jewellery Set</h3>
+                    <p class="price">₹499</p>
+                    <button class="btn add-cart">Add to Cart</button>
+                </div>
+            </article>
+
+            <article class="product" data-category="Clothing">
+                <img src="https://images.unsplash.com/photo-1485230895905-ec40ba36b9bc?auto=format&fit=crop&w=600&q=80"
+                     alt="Stylish modern clothing">
+                <div class="product-info">
+                    <h3>Chic Casual Wear</h3>
+                    <p class="price">₹749</p>
+                    <button class="btn add-cart">Add to Cart</button>
+                </div>
+            </article>
+
         </div>
 
-        <!-- Product 3 -->
-        <div class="product-card">
-            <img src="https://placeholder.com" alt="Product Image">
-            <h3>Minimalist Watch</h3>
-            <p>$89.99</p>
-            <a href="#" class="btn">Add to Cart</a>
-        </div>
-    </main>
+        <p class="cart-message" id="cart-message" aria-live="polite"></p>
+    </section>
 
-    <!-- Footer -->
+    <section class="section about" id="about">
+        <h2>Our Story</h2>
+        <p>
+            At Mocha Boutique, we believe fashion should be
+            effortless, elegant, and affordable. Our collection
+            is carefully chosen to help you express your
+            individuality with confidence.
+        </p>
+    </section>
+
+    <section class="section" id="contact">
+        <h2>Get in Touch</h2>
+        <p class="subtitle">
+            Have a question? We would love to hear from you.
+        </p>
+        <p>Email: hello@mochaboutique.example</p>
+        <p>Instagram: @mochaboutique</p>
+    </section>
+
     <footer>
-        <p>&copy; 2026 QuickShop. All rights reserved.</p>
+        <p>&copy; 2026 Mocha Boutique. All rights reserved.</p>
+        <p>Made with style and love.</p>
     </footer>
+
+    <script>
+        let cartCount = 0;
+
+        const cartDisplay = document.getElementById("cart-count");
+        const cartMessage = document.getElementById("cart-message");
+
+        document.querySelectorAll(".add-cart").forEach(button => {
+            button.addEventListener("click", () => {
+                cartCount++;
+                cartDisplay.textContent = cartCount;
+
+                const productName = button.parentElement
+                    .querySelector("h3").textContent;
+
+                cartMessage.textContent =
+                    productName + " added to your cart!";
+            });
+        });
+
+        document.querySelectorAll(".category").forEach(button => {
+            button.addEventListener("click", () => {
+                const selectedCategory = button.dataset.category;
+
+                document.querySelectorAll(".category").forEach(item => {
+                    item.classList.remove("active");
+                });
+
+                button.classList.add("active");
+
+                document.querySelectorAll(".product").forEach(product => {
+                    const matches =
+                        selectedCategory === "All" ||
+                        product.dataset.category === selectedCategory;
+
+                    product.style.display = matches ? "" : "none";
+                });
+            });
+        });
+    </script>
 
 </body>
 </html>
