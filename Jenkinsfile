@@ -1,21 +1,30 @@
 pipeline{
-    agent any
+    agent none
     stages{
-        stage('checkout'){
+        stage('build'){
+            agent{
+                label 'buildagent'
+            }
             steps{
                 deleteDir()
                 sh '''
                 git clone https://github.com/Hamdha-Fathima-P/sample-project.git
                 ls -l /var/www/html
                 '''
+                stash name : 'website' , includes : 'sample-project/**'
             }
         }
         stage('deploy'){
+            agent{
+                label 'deployagent'
+            }
             steps{
+                unstash 'website'
                 sh'''
-                cp sample-project/* /var/www/html
+                sudo cp sample-project/* /var/www/html
                 '''
             }
         }
     }
 }
+
