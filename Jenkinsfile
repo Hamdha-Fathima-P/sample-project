@@ -9,7 +9,7 @@ pipeline{
                 deleteDir()
                 sh '''
                 git clone https://github.com/Hamdha-Fathima-P/sample-project.git
-                ls -l /var/www/html
+                ls -l 
                 '''
                 stash name : 'website' , includes : 'sample-project/**'
             }
@@ -19,6 +19,7 @@ pipeline{
                 label 'deployagent'
             }
             steps{
+                deleteDir()
                 unstash 'website'
                 sh'''
                 sudo cp sample-project/* /var/www/html
@@ -27,4 +28,3 @@ pipeline{
         }
     }
 }
-
